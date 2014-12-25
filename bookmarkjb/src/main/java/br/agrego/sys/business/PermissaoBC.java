@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.loader.MultipleBagFetchException;
 
 import br.agrego.sys.acesscontrol.Credenciais;
 import br.agrego.sys.domain.EnumMenu;
@@ -19,6 +22,7 @@ import br.agrego.sys.persistence.PermissaoDAO;
 import br.agrego.sys.template.MyBCInterface;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.template.DelegateCrud;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @BusinessController
 public class PermissaoBC extends DelegateCrud<Permissao, Integer, PermissaoDAO> implements MyBCInterface<Permissao> {
@@ -30,6 +34,7 @@ public class PermissaoBC extends DelegateCrud<Permissao, Integer, PermissaoDAO> 
 
 	private static final long serialVersionUID = 1L;
 	
+	@Transactional
 	public void inicia(){
 		List<Permissao> bean = getDelegate().findAll();
 		if (bean.size() == 0) {
@@ -46,8 +51,30 @@ public class PermissaoBC extends DelegateCrud<Permissao, Integer, PermissaoDAO> 
 
 	@Override
 	public void save(Permissao bean) throws MyException {
-		// TODO Auto-generated method stub
-		
+		if (bean.getId() != null) {
+			update(bean);
+			throw MyException.update();
+		} else {
+			//verificar se ja existe a permissão
+			//se existir, retornar o erro
+			if (!existePermissao(bean.getGrupo(), bean.getMenu())){
+				insert(bean);
+				throw MyException.insert();
+			}else{
+				throw MyException.custon(2, "JÁ EXISTE ESSA PERMISSÃO, NÃO POSSO ADICIONA-LA.");
+			}
+		}
+	}
+
+	private boolean existePermissao(Grupo grupo, EnumMenu menu) {
+		List<Permissao> list = getDelegate().findByExample(grupo,menu);
+		if (list.size()>0) return true;
+		return false;
+	}
+
+	public void excluir(Integer id) throws MyException {
+		super.delete(id);
+		throw MyException.delete();
 	}
 	
 	private List<Permissao> geraPermissoes(Grupo grupo){

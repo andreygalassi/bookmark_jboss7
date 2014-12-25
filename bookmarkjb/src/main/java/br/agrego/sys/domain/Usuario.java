@@ -73,7 +73,7 @@ public class Usuario implements Serializable{
 	@Column(name="EMAIL")
 	private String email;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE},targetEntity=Grupo.class,fetch=FetchType.LAZY)
+	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE},targetEntity=Grupo.class,fetch=FetchType.LAZY)
  	@JoinTable (
  		  name="DEF_REL_USUARIO_GRUPO",
  	      joinColumns=@JoinColumn(name="USUARIO_ID"),
@@ -208,7 +208,7 @@ public class Usuario implements Serializable{
 	}
 
 	public void setGrupos(Set<Grupo> grupos) {
-		this.grupos.addAll(grupos);
+		this.grupos = grupos;
 	}
 
 	public Set<Grupo> getGrupos() {

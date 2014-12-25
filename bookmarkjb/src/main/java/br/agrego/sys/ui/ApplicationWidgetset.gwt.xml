@@ -3,4 +3,10 @@
     <inherits name="com.github.wolfie.refresher.RefresherApplicationWidgetset" />
 
     <inherits name="org.vaadin.easyuploads.EasyuploadsWidgetset" />
+
+    <inherits name="it.portus.addon.numberfield.widgetset.NumberfieldWidgetset" />
+
+    <inherits name="com.vaadin.maskedtextfield.widgetset.MaskedTextFieldWidgetset" />
+
+    <inherits name="de.essendi.vaadin.ui.component.numberfield.widgetset.NumberFieldWidgetset" />
 </module>

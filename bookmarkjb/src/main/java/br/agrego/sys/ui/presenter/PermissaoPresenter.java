@@ -48,6 +48,9 @@ public class PermissaoPresenter extends AbstractPresenter<PermissaoView> {
 	public void processLoad(@Observes @ProcessLoad Grupo grupo) {
 		getView().grupo.setContainerDataSource(CollectionContainer.fromBeans(grupoBC.findAllAtivos()));
 	}
+	public void processLoad(@Observes @ProcessLoad Permissao permissao) {
+		setList(permissaoBC.findPermissoes());
+	}
 	
 	@SuppressWarnings({ "serial" })
 	public void processSave(@Observes @ProcessSave PermissaoView view) {
@@ -69,6 +72,7 @@ public class PermissaoPresenter extends AbstractPresenter<PermissaoView> {
 		} catch (MyException e) {
 			e.showMessage(getView());
 			setList(permissaoBC.findAll());
+//			if (permissao!=null)
 			beanManager.fireEvent(permissao, new AnnotationLiteral<ProcessLoad>() {});
 			clear();
 		} catch (Exception e) {
@@ -110,7 +114,7 @@ public class PermissaoPresenter extends AbstractPresenter<PermissaoView> {
 			permissao = (Permissao) view.tabela.getValue();
 			if (permissao==null) new MyException(2, "SELECIONE UM REGISTRO PARA EXCLUIR.");
 
-			permissaoBC.delete(permissao.getId());
+			permissaoBC.excluir(permissao.getId());
 		} catch (MyException e) {
 			e.showMessage(getView());
 			setList(permissaoBC.findAll());

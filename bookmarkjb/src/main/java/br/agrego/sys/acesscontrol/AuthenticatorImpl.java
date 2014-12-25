@@ -44,22 +44,22 @@ public class AuthenticatorImpl implements Authenticator  {
 
 				if (pAlterar.containsKey(menu) ){
 					if (pAlterar.get(menu).equals(EnumTipoPermissao.PERMITIDO)){
-						credenciais.putPermissao(menu.toString(), "ALTERAR");
+						credenciais.putPermissao(menu.getNome(), "ALTERAR");
 					}
 				}
 				if (pCriar.containsKey(menu) ){
 					if (pCriar.get(menu).equals(EnumTipoPermissao.PERMITIDO)){
-						credenciais.putPermissao(menu.toString(), "CRIAR");
+						credenciais.putPermissao(menu.getNome(), "CRIAR");
 					}
 				}
 				if (pExcluir.containsKey(menu) ){
 					if (pExcluir.get(menu).equals(EnumTipoPermissao.PERMITIDO)){
-						credenciais.putPermissao(menu.toString(), "EXCLUIR");
+						credenciais.putPermissao(menu.getNome(), "EXCLUIR");
 					}
 				}
 				if (pImprimir.containsKey(menu) ){
 					if (pImprimir.get(menu).equals(EnumTipoPermissao.PERMITIDO)){
-						credenciais.putPermissao(menu.toString(), "IMPRIMIR");
+						credenciais.putPermissao(menu.getNome(), "IMPRIMIR");
 					}
 				}
 			}

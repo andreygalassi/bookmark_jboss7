@@ -65,7 +65,7 @@ public class Grupo implements Serializable{
 	@Field(prompt = "{grupo.label.grupo}", label = "{grupo.label.grupo}")
 	private String descricao;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE},targetEntity=Usuario.class,fetch=FetchType.LAZY)
+	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE},targetEntity=Usuario.class,fetch=FetchType.LAZY)
  	@JoinTable (
  		  name="DEF_REL_USUARIO_GRUPO",
  	      joinColumns=@JoinColumn(name="GRUPO_ID"),

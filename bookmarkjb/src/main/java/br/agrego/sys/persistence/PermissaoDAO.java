@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import br.agrego.sys.domain.EnumMenu;
 import br.agrego.sys.domain.EnumTipoPermissao;
+import br.agrego.sys.domain.Grupo;
 import br.agrego.sys.domain.Permissao;
 import br.agrego.sys.domain.Usuario;
 import br.gov.frameworkdemoiselle.stereotype.PersistenceController;
@@ -239,6 +240,21 @@ public class PermissaoDAO extends JPACrud<Permissao, Integer> {
 		queryString.append(" where u = :usuario " );
 		Query query = createQuery(queryString.toString());
 		query.setParameter("usuario", usuario);
+		
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Permissao> findByExample(Grupo grupo, EnumMenu menu) {
+		StringBuilder queryString = new StringBuilder();
+		
+		queryString.append(" select p from Permissao p " );
+		queryString.append(" where p.grupo = :grupo and p.menu = :menu " );
+		
+		Query query = createQuery(queryString.toString());
+
+		query.setParameter("grupo", grupo);
+		query.setParameter("menu", menu);
 		
 		return query.getResultList();
 	}

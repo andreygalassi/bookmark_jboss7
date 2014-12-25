@@ -21,21 +21,6 @@ public class UsuarioBC extends DelegateCrud<Usuario, Long, UsuarioDAO> implement
 	private static final long serialVersionUID = 1L;
 
 	@Inject Credenciais credenciais;
-
-	@Override 
-	public void save(Usuario bean) throws MyException {
-		if (bean.getId() != null) {
-			if (bean.getSenha().length()<30){
-				bean.setSenha(CriptografiaUtil.criptografaString(bean.getSenha()));
-			}
-			update(bean);
-			throw MyException.update();
-		} else {
-			bean.setSenha(CriptografiaUtil.criptografaString(bean.getSenha()));
-			insert(bean);
-			throw MyException.insert();
-		}
-	}
 	
 	@Transactional
 	public void inicia(){
@@ -55,6 +40,21 @@ public class UsuarioBC extends DelegateCrud<Usuario, Long, UsuarioDAO> implement
 //			lista.add("admin");
 //			lista.add("usuario");	
 		}	
+	}
+
+	@Override 
+	public void save(Usuario bean) throws MyException {
+		if (bean.getId() != null) {
+			if (bean.getSenha().length()<30){
+				bean.setSenha(CriptografiaUtil.criptografaString(bean.getSenha()));
+			}
+			update(bean);
+			throw MyException.update();
+		} else {
+			bean.setSenha(CriptografiaUtil.criptografaString(bean.getSenha()));
+			insert(bean);
+			throw MyException.insert();
+		}
 	}
 
 	@Override

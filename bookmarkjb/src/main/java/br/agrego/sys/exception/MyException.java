@@ -18,6 +18,7 @@ public class MyException extends Exception   {
 	public static MyException update() {return new MyException(1,"REGISTRO SALVO COM SUCESSO!");}
 	public static MyException delete() {return new MyException(1,"REGISTRO EXCLUIDO COM SUCESSO!");}
 	public static MyException erro() {return new MyException(3,"ERRO AO EXECUTAR AÇÃO!");}
+	public static MyException custon(int notification, String message) {return new MyException(notification,message);}
 	
 	public MyException(String message) {
 		super(message);
